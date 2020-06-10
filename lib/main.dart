@@ -8,7 +8,7 @@ class SnackingCalculator extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Kalkulator Jajan',
-      home: Participants(),
+      home: ParticipantScreen(),
     );
   }
 }
