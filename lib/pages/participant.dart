@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:snacking_calculator/models/participant_model.dart';
+import 'package:snacking_calculator/pages/item.dart';
 
 class ParticipantScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -102,15 +103,5 @@ class ParticipantsList extends StatelessWidget {
             ],
           );
         });
-  }
-}
-
-// TODO: move to separate page
-class ItemScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(middle: Text('Daftar Jajanan')),
-        child: Center(child: Text('Ulala')));
   }
 }
