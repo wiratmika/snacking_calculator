@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:snacking_calculator/models/participant_model.dart';
+import 'package:snacking_calculator/pages/item.dart';
 import 'package:snacking_calculator/pages/participant.dart';
 
 void main() => runApp(ChangeNotifierProvider(
@@ -13,7 +14,11 @@ class SnackingCalculator extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Kalkulator Jajan',
-      home: ParticipantScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => ParticipantScreen(),
+        '/items': (context) => ItemScreen(),
+      },
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:snacking_calculator/models/participant_model.dart';
-import 'package:snacking_calculator/pages/item.dart';
 
 class ParticipantScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -59,10 +58,7 @@ class ParticipantScreen extends StatelessWidget {
               CupertinoButton(
                 child: Text('Selanjutnya'),
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(CupertinoPageRoute(builder: (context) {
-                    return ItemScreen();
-                  }));
+                  Navigator.pushNamed(context, '/items');
                 },
               ),
             ]);
