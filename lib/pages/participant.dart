@@ -1,26 +1,22 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:snacking_calculator/models/participant_model.dart';
 
-class ParticipantScreen extends StatefulWidget {
-  @override
-  _ParticipantScreenState createState() => _ParticipantScreenState();
-}
-
-class _ParticipantScreenState extends State<ParticipantScreen> {
-  final List<String> participants = [];
+class ParticipantScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
-  void addParticipant() {
+  void addParticipant(context, callback) {
     String input = _controller.text.trim();
     if (input.length == 0) {
       showCupertinoDialog(
           context: context,
           builder: (context) {
             return CupertinoAlertDialog(
-              title: Text('Maaf!'),
-              content: Text('Masih kosong boque!'),
+              title: Text('Mohon maaf'),
+              content: Text('Nama partisipan tidak boleh kosong'),
               actions: [
                 CupertinoDialogAction(
-                    child: Text('fahim'),
+                    child: Text('OK'),
                     onPressed: () {
                       Navigator.of(context).pop();
                     })
@@ -30,54 +26,49 @@ class _ParticipantScreenState extends State<ParticipantScreen> {
       return;
     }
 
-    setState(() {
-      participants.add(input);
-      _controller.clear();
-    });
-  }
-
-  void deleteParticipant(index) {
-    setState(() {
-      participants.removeAt(index);
-    });
+    callback(input);
+    _controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        navigationBar:
-            CupertinoNavigationBar(middle: Text('Daftar Partisipan')),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                ParticipantsList(
-                    participants: participants, onDelete: deleteParticipant),
-                CupertinoTextField(
-                    controller: _controller,
-                    placeholder: 'Tambah partisipan',
-                    onSubmitted: (text) {
-                      addParticipant();
-                    }),
-                CupertinoButton(
+      navigationBar: CupertinoNavigationBar(middle: Text('Daftar Partisipan')),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Consumer<ParticipantModel>(
+              builder: (context, participants, child) {
+            return Column(children: [
+              ParticipantsList(
+                  participants: participants.items,
+                  onDelete: participants.delete),
+              CupertinoTextField(
+                  controller: _controller,
+                  placeholder: 'Tambah partisipan',
+                  onSubmitted: (text) {
+                    addParticipant(context, participants.add);
+                  }),
+              CupertinoButton(
                   // TODO consider whether this is optional
                   child: Text('Tambah'),
-                  onPressed: addParticipant,
-                ),
-                CupertinoButton(
-                  child: Text('Selanjutnya'),
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(CupertinoPageRoute(builder: (context) {
-                      return ItemScreen();
-                    }));
-                  },
-                ),
-              ],
-            ),
-          ),
-        ));
+                    addParticipant(context, participants.add);
+                  }),
+              CupertinoButton(
+                child: Text('Selanjutnya'),
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (context) {
+                    return ItemScreen();
+                  }));
+                },
+              ),
+            ]);
+          }),
+        ),
+      ),
+    );
   }
 }
 

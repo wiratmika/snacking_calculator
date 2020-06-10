@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:snacking_calculator/models/participant_model.dart';
 import 'package:snacking_calculator/pages/participant.dart';
 
-void main() => runApp(SnackingCalculator());
+void main() => runApp(ChangeNotifierProvider(
+      create: (context) => ParticipantModel(),
+      child: SnackingCalculator(),
+    ));
 
 class SnackingCalculator extends StatelessWidget {
   @override
