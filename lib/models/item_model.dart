@@ -2,12 +2,12 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
 class ItemModel extends ChangeNotifier {
-  final List<String> _items = [];
+  final List<Item> _items = [];
 
-  UnmodifiableListView<String> get items => UnmodifiableListView(_items);
+  UnmodifiableListView<Item> get items => UnmodifiableListView(_items);
 
-  void add(String item) {
-    _items.add(item);
+  void add(String name) {
+    _items.add(Item(name, 1));
     notifyListeners();
   }
 
@@ -22,7 +22,7 @@ class Item {
   int quantity;
   int totalPrice;
 
-  Item(this.name, this.quantity, this.totalPrice);
+  Item(this.name, this.quantity);
 
   double get unitPrice => totalPrice / quantity;
 }

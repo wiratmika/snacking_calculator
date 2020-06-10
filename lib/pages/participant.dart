@@ -1,34 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:snacking_calculator/models/participant_model.dart';
+import 'package:snacking_calculator/utils.dart';
 
 class ParticipantScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
-
-  void addParticipant(context, callback) {
-    String input = _controller.text.trim();
-    if (input.length == 0) {
-      showCupertinoDialog(
-          context: context,
-          builder: (context) {
-            return CupertinoAlertDialog(
-              title: Text('Mohon maaf'),
-              content: Text('Nama partisipan tidak boleh kosong'),
-              actions: [
-                CupertinoDialogAction(
-                    child: Text('OK'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    })
-              ],
-            );
-          });
-      return;
-    }
-
-    callback(input);
-    _controller.clear();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +23,15 @@ class ParticipantScreen extends StatelessWidget {
                   controller: _controller,
                   placeholder: 'Tambah partisipan',
                   onSubmitted: (text) {
-                    addParticipant(context, participants.add);
+                    validateInput(context, _controller.text, participants.add);
+                    _controller.clear();
                   }),
               CupertinoButton(
                   // TODO consider whether this is optional
                   child: Text('Tambah'),
                   onPressed: () {
-                    addParticipant(context, participants.add);
+                    validateInput(context, _controller.text, participants.add);
+                    _controller.clear();
                   }),
               CupertinoButton(
                 child: Text('Selanjutnya'),
