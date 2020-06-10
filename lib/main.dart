@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:snacking_calculator/pages/participants.dart';
+import 'package:snacking_calculator/pages/participant.dart';
 
 void main() => runApp(SnackingCalculator());
 
