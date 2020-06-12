@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snacking_calculator/models/participant_model.dart';
 import 'package:snacking_calculator/utils.dart';
+import 'package:snacking_calculator/widgets.dart';
 
 class ParticipantScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -72,15 +72,9 @@ class ParticipantsList extends StatelessWidget {
               Expanded(
                 child: Text(participants[index]),
               ),
-              CupertinoButton(
-                  child: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                    size: 24.0,
-                  ),
-                  onPressed: () {
-                    onDelete(index);
-                  })
+              DeleteButton(() {
+                onDelete(index);
+              })
             ],
           );
         });
