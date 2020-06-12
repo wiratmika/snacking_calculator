@@ -7,6 +7,9 @@ class ParticipantModel extends ChangeNotifier {
   UnmodifiableListView<String> get items => UnmodifiableListView(_participants);
 
   void add(String participant) {
+    if (_participants.contains(participant)) {
+      return;
+    }
     _participants.add(participant);
     notifyListeners();
   }
