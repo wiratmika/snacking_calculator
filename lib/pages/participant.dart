@@ -17,9 +17,7 @@ class ParticipantScreen extends StatelessWidget {
           child: Consumer<ParticipantModel>(
               builder: (context, participants, child) {
             return Column(children: [
-              ParticipantsList(
-                  participants: participants.items,
-                  onDelete: participants.delete),
+              ParticipantsList(participants.items, participants.delete),
               CupertinoTextField(
                   controller: _controller,
                   placeholder: 'Tambah partisipan',
@@ -54,9 +52,7 @@ class ParticipantsList extends StatelessWidget {
   final List<String> participants;
   final Function(int) onDelete;
 
-  ParticipantsList(
-      {Key key, @required this.participants, @required this.onDelete})
-      : super(key: key);
+  ParticipantsList(this.participants, this.onDelete);
 
   @override
   Widget build(BuildContext context) {
