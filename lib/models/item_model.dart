@@ -20,6 +20,16 @@ class ItemModel extends ChangeNotifier {
     _items[index].totalPrice = price;
     notifyListeners();
   }
+
+  void updateQuantity(int index, bool isAdd) {
+    Item item = _items[index];
+    if (item.quantity == 1 && !isAdd) {
+      return;
+    }
+
+    item.quantity = isAdd ? item.quantity + 1 : item.quantity - 1;
+    notifyListeners();
+  }
 }
 
 class Item {

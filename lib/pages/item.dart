@@ -17,8 +17,8 @@ class ItemScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Consumer<ItemModel>(builder: (context, items, child) {
                   return Column(children: [
-                    ItemsList(
-                        items.items, items.delete, items.updateTotalPrice),
+                    ItemsList(items.items, items.delete, items.updateTotalPrice,
+                        items.updateQuantity),
                     CupertinoTextField(
                         controller: _controller,
                         placeholder: 'Tambah jajanan...',
@@ -48,8 +48,10 @@ class ItemsList extends StatelessWidget {
   final List<Item> items;
   final Function(int) onDelete;
   final Function(int, int) onUpdatePrice;
+  final Function(int, bool) onUpdateQuantity;
 
-  ItemsList(this.items, this.onDelete, this.onUpdatePrice);
+  ItemsList(
+      this.items, this.onDelete, this.onUpdatePrice, this.onUpdateQuantity);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,13 @@ class ItemsList extends StatelessWidget {
           return Row(
             children: [
               Expanded(child: Row(children: itemInfo)),
-              Text('x ${item.quantity.toString()} = '),
+              NumberPickerButton(false, () {
+                onUpdateQuantity(index, false);
+              }),
+              Text(item.quantity.toString()),
+              NumberPickerButton(true, () {
+                onUpdateQuantity(index, true);
+              }),
               Container(
                   width: 80,
                   child: CupertinoTextField(
