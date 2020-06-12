@@ -38,3 +38,34 @@ class NumberPickerButton extends StatelessWidget {
             onPressed: onPressed));
   }
 }
+
+class NavigationButtonSet extends StatelessWidget {
+  final String destination;
+  final bool enabled;
+
+  NavigationButtonSet(this.destination, this.enabled);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: CupertinoButton(
+          child: Text('< Kembali'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        )),
+        Expanded(
+            child: CupertinoButton(
+          child: Text('Selanjutnya >'),
+          onPressed: enabled
+              ? () {
+                  Navigator.pushNamed(context, destination);
+                }
+              : null,
+        )),
+      ],
+    );
+  }
+}

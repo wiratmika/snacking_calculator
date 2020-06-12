@@ -33,26 +33,7 @@ class ItemScreen extends StatelessWidget {
                           validateInput(context, _controller.text, items.add);
                           _controller.clear();
                         }),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: CupertinoButton(
-                          child: Text('< Kembali'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )),
-                        Expanded(
-                            child: CupertinoButton(
-                          child: Text('Selanjutnya >'),
-                          onPressed: items.isPriceFilled()
-                              ? () {
-                                  Navigator.pushNamed(context, '/fees');
-                                }
-                              : null,
-                        )),
-                      ],
-                    )
+                    NavigationButtonSet('/fees', items.isPriceFilled()),
                   ]);
                 }))));
   }
