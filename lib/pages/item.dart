@@ -14,9 +14,10 @@ class ItemScreen extends StatelessWidget {
         child: SafeArea(
             child: Consumer<ItemModel>(builder: (context, items, child) {
           return Column(children: [
+            ItemsList(items: items.items, onDelete: items.delete),
             CupertinoTextField(
                 controller: _controller,
-                placeholder: 'Tambah partisipan',
+                placeholder: 'Tambah jajanan',
                 onSubmitted: (text) {
                   validateInput(context, _controller.text, items.add);
                   _controller.clear();

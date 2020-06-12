@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snacking_calculator/models/participant_model.dart';
 import 'package:snacking_calculator/utils.dart';
@@ -72,7 +73,11 @@ class ParticipantsList extends StatelessWidget {
                 child: Text(participants[index]),
               ),
               CupertinoButton(
-                  child: Text('apus'),
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                    size: 24.0,
+                  ),
                   onPressed: () {
                     onDelete(index);
                   })
