@@ -9,6 +9,7 @@ void validateInput(context, input, callback) {
         builder: (context) {
           return CupertinoAlertDialog(
             title: Text('Mohon maaf'),
+            // TODO Make text dynamic
             content: Text('Nama partisipan tidak boleh kosong'),
             actions: [
               CupertinoDialogAction(

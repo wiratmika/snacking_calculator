@@ -30,6 +30,17 @@ class ItemModel extends ChangeNotifier {
     item.quantity = isAdd ? item.quantity + 1 : item.quantity - 1;
     notifyListeners();
   }
+
+  bool isPriceFilled() {
+    if (_items.isEmpty) return false;
+
+    for (Item item in _items) {
+      if (item.totalPrice == null) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
 class Item {
