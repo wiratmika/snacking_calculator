@@ -13,31 +13,33 @@ class ItemScreen extends StatelessWidget {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(middle: Text('Daftar Jajanan')),
         child: SafeArea(
-            child: Consumer<ItemModel>(builder: (context, items, child) {
-          return Column(children: [
-            ItemsList(items.items, items.delete),
-            CupertinoTextField(
-                controller: _controller,
-                placeholder: 'Tambah jajanan',
-                onSubmitted: (text) {
-                  validateInput(context, _controller.text, items.add);
-                  _controller.clear();
-                }),
-            CupertinoButton(
-                // TODO consider whether this is optional
-                child: Text('Tambah'),
-                onPressed: () {
-                  validateInput(context, _controller.text, items.add);
-                  _controller.clear();
-                }),
-            CupertinoButton(
-              child: Text('Kembali'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          ]);
-        })));
+            child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Consumer<ItemModel>(builder: (context, items, child) {
+                  return Column(children: [
+                    ItemsList(items.items, items.delete),
+                    CupertinoTextField(
+                        controller: _controller,
+                        placeholder: 'Tambah jajanan...',
+                        onSubmitted: (text) {
+                          validateInput(context, _controller.text, items.add);
+                          _controller.clear();
+                        }),
+                    CupertinoButton(
+                        // TODO consider whether this is optional
+                        child: Text('Tambah'),
+                        onPressed: () {
+                          validateInput(context, _controller.text, items.add);
+                          _controller.clear();
+                        }),
+                    CupertinoButton(
+                      child: Text('Kembali'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ]);
+                }))));
   }
 }
 

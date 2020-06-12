@@ -20,7 +20,7 @@ class ParticipantScreen extends StatelessWidget {
               ParticipantsList(participants.items, participants.delete),
               CupertinoTextField(
                   controller: _controller,
-                  placeholder: 'Tambah partisipan',
+                  placeholder: 'Tambah partisipan...',
                   onSubmitted: (text) {
                     validateInput(context, _controller.text, participants.add);
                     _controller.clear();
