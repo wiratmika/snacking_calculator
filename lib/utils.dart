@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:snacking_calculator/models/item_model.dart';
 
 void validateInput(context, input, callback) {
@@ -34,14 +35,5 @@ bool isNumeric(String s) {
   return double.tryParse(s) != null;
 }
 
-int calculateTotalPrice(List<Item> items, discount, tax, tip, delivery) {
-  int sum = 0;
-  for (Item item in items) {
-    sum += item.totalPrice;
-  }
-  discount ??= 0;
-  tax ??= 0;
-  tip ??= 0;
-  delivery ??= 0;
-  return sum + discount + tax + tip + delivery;
-}
+String formatRupiah(int amount) =>
+    NumberFormat.currency(locale: 'id_ID').format(amount);

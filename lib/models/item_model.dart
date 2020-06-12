@@ -41,6 +41,9 @@ class ItemModel extends ChangeNotifier {
     }
     return true;
   }
+
+  int get totalPrice => _items.fold(
+      0, (previousValue, element) => previousValue + element.totalPrice);
 }
 
 class Item {

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:snacking_calculator/models/item_model.dart';
 import 'package:snacking_calculator/utils.dart';
@@ -58,13 +59,14 @@ class ItemsList extends StatelessWidget {
         itemCount: items.length,
         itemBuilder: (BuildContext context, int index) {
           Item item = items[index];
-          List<Widget> itemInfo = [Text(item.name)];
           TextEditingValue currentPrice;
+          String unitPrice;
 
           if (item.totalPrice != null) {
-            itemInfo.add(Text(' @${item.unitPrice}'));
+            unitPrice = '@${formatRupiah(item.unitPrice)}';
             currentPrice = TextEditingValue(text: item.totalPrice.toString());
           } else {
+            unitPrice = 'Masukkan harga total';
             currentPrice = TextEditingValue(text: '');
           }
 
@@ -82,28 +84,33 @@ class ItemsList extends StatelessWidget {
             onUpdatePrice(index, int.parse(text));
           });
 
-          return Row(
-            children: [
-              Expanded(child: Row(children: itemInfo)),
-              NumberPickerButton(false, () {
-                onUpdateQuantity(index, false);
-              }),
-              Text(item.quantity.toString()),
-              NumberPickerButton(true, () {
-                onUpdateQuantity(index, true);
-              }),
-              Container(
-                  width: 80,
-                  child: CupertinoTextField(
-                    controller: _controller,
-                    placeholder: 'Harga',
-                    keyboardType: TextInputType.number,
-                  )),
-              DeleteButton(() {
-                onDelete(index);
-              })
-            ],
-          );
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: Text(item.name)),
+                    NumberPickerButton(false, () {
+                      onUpdateQuantity(index, false);
+                    }),
+                    Text(item.quantity.toString()),
+                    NumberPickerButton(true, () {
+                      onUpdateQuantity(index, true);
+                    }),
+                    Container(
+                        width: 80,
+                        child: CupertinoTextField(
+                          controller: _controller,
+                          placeholder: 'Harga',
+                          keyboardType: TextInputType.number,
+                        )),
+                    DeleteButton(() {
+                      onDelete(index);
+                    })
+                  ],
+                ),
+                Text(unitPrice, style: TextStyle(color: Colors.grey))
+              ]);
         });
   }
 }

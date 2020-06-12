@@ -30,4 +30,13 @@ class FeeModel extends ChangeNotifier {
     _delivery = delivery;
     notifyListeners();
   }
+
+  int get total {
+    discount ??= 0;
+    tax ??= 0;
+    tip ??= 0;
+    delivery ??= 0;
+
+    return tax + tip + delivery - discount;
+  }
 }

@@ -20,8 +20,7 @@ class FeeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Consumer2<ItemModel, FeeModel>(
                     builder: (context, items, fees, child) {
-                  int totalPrice = calculateTotalPrice(items.items,
-                      fees.discount, fees.tax, fees.tip, fees.delivery);
+                  int totalPrice = items.totalPrice + fees.total;
 
                   return Column(children: [
                     CupertinoTextField(
@@ -34,21 +33,22 @@ class FeeScreen extends StatelessWidget {
                         controller: _taxController,
                         placeholder: 'Pajak',
                         onSubmitted: (text) {
-                          fees.discount = int.parse(_taxController.text);
+                          fees.tax = int.parse(_taxController.text);
                         }),
                     CupertinoTextField(
                         controller: _tipController,
                         placeholder: 'Tip',
                         onSubmitted: (text) {
-                          fees.discount = int.parse(_tipController.text);
+                          fees.tip = int.parse(_tipController.text);
                         }),
                     CupertinoTextField(
                         controller: _deliveryController,
                         placeholder: 'Biaya pengantaran',
                         onSubmitted: (text) {
-                          fees.discount = int.parse(_deliveryController.text);
+                          fees.delivery = int.parse(_deliveryController.text);
                         }),
-                    Text('Total yang dibayarkan: Rp $totalPrice'),
+                    Text('Harga jajanan: ${formatRupiah(items.totalPrice)}'),
+                    Text('Total yang dibayarkan: ${formatRupiah(totalPrice)}'),
                     NavigationButtonSet('/allocation', true)
                   ]);
                 }))));
