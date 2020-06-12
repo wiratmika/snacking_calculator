@@ -35,7 +35,7 @@ class ParticipantScreen extends StatelessWidget {
                   }),
               CupertinoButton(
                 child: Text('Selanjutnya'),
-                onPressed: participants.items.length > 0
+                onPressed: participants.items.isNotEmpty
                     ? () {
                         Navigator.pushNamed(context, '/items');
                       }
