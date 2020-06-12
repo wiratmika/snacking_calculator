@@ -15,6 +15,11 @@ class ItemModel extends ChangeNotifier {
     _items.removeAt(index);
     notifyListeners();
   }
+
+  void updateTotalPrice(int index, int price) {
+    _items[index].totalPrice = price;
+    notifyListeners();
+  }
 }
 
 class Item {
@@ -24,5 +29,5 @@ class Item {
 
   Item(this.name, this.quantity);
 
-  double get unitPrice => totalPrice / quantity;
+  int get unitPrice => totalPrice ~/ quantity;
 }

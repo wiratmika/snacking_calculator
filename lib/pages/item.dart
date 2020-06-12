@@ -17,7 +17,8 @@ class ItemScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Consumer<ItemModel>(builder: (context, items, child) {
                   return Column(children: [
-                    ItemsList(items.items, items.delete),
+                    ItemsList(
+                        items.items, items.delete, items.updateTotalPrice),
                     CupertinoTextField(
                         controller: _controller,
                         placeholder: 'Tambah jajanan...',
@@ -46,8 +47,9 @@ class ItemScreen extends StatelessWidget {
 class ItemsList extends StatelessWidget {
   final List<Item> items;
   final Function(int) onDelete;
+  final Function(int, int) onUpdatePrice;
 
-  ItemsList(this.items, this.onDelete);
+  ItemsList(this.items, this.onDelete, this.onUpdatePrice);
 
   @override
   Widget build(BuildContext context) {
@@ -60,14 +62,40 @@ class ItemsList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           Item item = items[index];
           List<Widget> itemInfo = [Text(item.name)];
+          TextEditingValue currentPrice;
+
           if (item.totalPrice != null) {
             itemInfo.add(Text(' @${item.unitPrice}'));
+            currentPrice = TextEditingValue(text: item.totalPrice.toString());
+          } else {
+            currentPrice = TextEditingValue(text: '');
           }
+
+          TextEditingController _controller =
+              TextEditingController.fromValue(currentPrice);
+          _controller.addListener(() {
+            String text = _controller.text;
+            if (text == '') {
+              onUpdatePrice(index, 0);
+              return;
+            }
+            if (!isNumeric(text)) {
+              return;
+            }
+            onUpdatePrice(index, int.parse(text));
+          });
 
           return Row(
             children: [
               Expanded(child: Row(children: itemInfo)),
-              Text(item.quantity.toString()),
+              Text('x ${item.quantity.toString()} = '),
+              Container(
+                  width: 80,
+                  child: CupertinoTextField(
+                    controller: _controller,
+                    placeholder: 'Harga',
+                    keyboardType: TextInputType.number,
+                  )),
               DeleteButton(() {
                 onDelete(index);
               })
