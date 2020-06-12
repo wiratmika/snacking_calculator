@@ -35,9 +35,11 @@ class ParticipantScreen extends StatelessWidget {
                   }),
               CupertinoButton(
                 child: Text('Selanjutnya'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/items');
-                },
+                onPressed: participants.items.length > 0
+                    ? () {
+                        Navigator.pushNamed(context, '/items');
+                      }
+                    : null,
               ),
             ]);
           }),
