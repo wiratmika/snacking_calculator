@@ -39,4 +39,18 @@ class FeeModel extends ChangeNotifier {
 
     return tax + tip + delivery - discount;
   }
+
+  Fee getDividedFee(int participantNumber) {
+    return Fee(_discount ~/ participantNumber, _tax ~/ participantNumber,
+        _tip ~/ participantNumber, _delivery ~/ participantNumber);
+  }
+}
+
+class Fee {
+  final int discount;
+  final int tax;
+  final int tip;
+  final int delivery;
+
+  Fee(this.discount, this.tax, this.tip, this.delivery);
 }

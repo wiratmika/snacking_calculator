@@ -1,6 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:snacking_calculator/models/fee_model.dart';
+import 'package:snacking_calculator/models/item_model.dart';
 
 class AllocationModel extends ChangeNotifier {
   List<Allocation> _allocations = [];
@@ -50,6 +52,34 @@ class AllocationModel extends ChangeNotifier {
       }
     }
     return true;
+  }
+
+  int getParticipantNumber() =>
+      Set.from(_allocations.map((e) => e.participantName)).length;
+
+  Map<String, int> calculate(List<Item> items, Fee fee) {
+    Map<String, int> itemPrices = {
+      for (Item item in items) item.name: item.unitPrice
+    };
+
+    Map<String, int> result = {
+      for (Allocation allocation in _allocations) allocation.participantName: 0
+    };
+
+    for (Allocation allocation in _allocations) {
+      result[allocation.participantName] =
+          result[allocation.participantName] + itemPrices[allocation.itemName];
+    }
+
+    for (String participantName in result.keys) {
+      result[participantName] = result[participantName] +
+          fee.tax +
+          fee.tip +
+          fee.delivery -
+          fee.discount;
+    }
+
+    return result;
   }
 }
 

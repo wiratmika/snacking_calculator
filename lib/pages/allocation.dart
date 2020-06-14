@@ -11,7 +11,7 @@ class AllocationScreen extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return CupertinoActionSheet(
-            title: Text('Pilih partisipan'),
+            title: Text('Partisipan'),
             message: Text('Siapa yang membeli $itemName?'),
             actions: participants
                 .map((e) => CupertinoActionSheetAction(

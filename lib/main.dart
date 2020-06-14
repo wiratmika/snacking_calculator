@@ -8,6 +8,7 @@ import 'package:snacking_calculator/pages/allocation.dart';
 import 'package:snacking_calculator/pages/fee.dart';
 import 'package:snacking_calculator/pages/item.dart';
 import 'package:snacking_calculator/pages/participant.dart';
+import 'package:snacking_calculator/pages/summary.dart';
 
 void main() => runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => ParticipantModel()),
@@ -26,7 +27,8 @@ class SnackingCalculator extends StatelessWidget {
         '/': (context) => ParticipantScreen(),
         '/items': (context) => ItemScreen(),
         '/fees': (context) => FeeScreen(),
-        '/allocations': (context) => AllocationScreen()
+        '/allocations': (context) => AllocationScreen(),
+        '/summary': (context) => SummaryScreen()
       },
     );
   }
