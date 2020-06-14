@@ -3,27 +3,53 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
 class AllocationModel extends ChangeNotifier {
-  final List<Allocation> _allocations = [];
+  List<Allocation> _allocations = [];
 
   UnmodifiableListView<Allocation> get allocations =>
       UnmodifiableListView(_allocations);
+
+  String getItemName(int index) => _allocations[index].itemName;
 
   void addItem(String itemName) {
     _allocations.add(Allocation(itemName));
     notifyListeners();
   }
 
-  void deleteItem(String itemName) {
-    _allocations.where((item) => item.itemName != itemName);
+  void deleteAllItems(String itemName) {
+    _allocations =
+        _allocations.where((item) => item.itemName != itemName).toList();
     notifyListeners();
+  }
+
+  void deleteItem(String itemName) {
+    for (Allocation allocation in _allocations) {
+      if (allocation.itemName == itemName) {
+        _allocations.remove(allocation);
+        return;
+      }
+    }
   }
 
   void updateItemQuantity(String itemName, bool isAdd) {
     if (isAdd)
       addItem(itemName);
     else
-      _allocations.remove(itemName);
+      deleteItem(itemName);
     notifyListeners();
+  }
+
+  void allocate(int index, String participantName) {
+    _allocations[index].participantName = participantName;
+    notifyListeners();
+  }
+
+  bool isAllAllocated() {
+    for (Allocation allocation in _allocations) {
+      if (allocation.participantName == null) {
+        return false;
+      }
+    }
+    return true;
   }
 }
 

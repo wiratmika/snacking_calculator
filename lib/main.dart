@@ -4,6 +4,7 @@ import 'package:snacking_calculator/models/allocation_model.dart';
 import 'package:snacking_calculator/models/fee_model.dart';
 import 'package:snacking_calculator/models/item_model.dart';
 import 'package:snacking_calculator/models/participant_model.dart';
+import 'package:snacking_calculator/pages/allocation.dart';
 import 'package:snacking_calculator/pages/fee.dart';
 import 'package:snacking_calculator/pages/item.dart';
 import 'package:snacking_calculator/pages/participant.dart';
@@ -25,6 +26,7 @@ class SnackingCalculator extends StatelessWidget {
         '/': (context) => ParticipantScreen(),
         '/items': (context) => ItemScreen(),
         '/fees': (context) => FeeScreen(),
+        '/allocations': (context) => AllocationScreen()
       },
     );
   }

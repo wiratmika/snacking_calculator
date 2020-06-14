@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:snacking_calculator/models/item_model.dart';
 
 void validateInput(context, input, callback) {
   input = input.trim();

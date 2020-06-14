@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:snacking_calculator/models/allocation_model.dart';
 import 'package:snacking_calculator/models/item_model.dart';
 import 'package:snacking_calculator/utils.dart';
 import 'package:snacking_calculator/widgets.dart';
@@ -11,24 +12,38 @@ class ItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultWrapper('Daftar Jajanan',
-        Consumer<ItemModel>(builder: (context, items, child) {
+        Consumer2<ItemModel, AllocationModel>(
+            builder: (context, items, allocations, child) {
+      void onAdd(String itemName) {
+        items.add(itemName);
+        allocations.addItem(itemName);
+        _controller.clear();
+      }
+
+      void onDelete(int index) {
+        String itemName = items.getItemName(index);
+        items.delete(index);
+        allocations.deleteAllItems(itemName);
+      }
+
+      void onUpdateQuantity(int index, bool isAdd) {
+        String itemName = items.getItemName(index);
+        items.updateQuantity(index, isAdd);
+        allocations.updateItemQuantity(itemName, isAdd);
+      }
+
       return Column(children: [
-        ItemsList(items.items, items.delete, items.updateTotalPrice,
-            items.updateQuantity),
+        ItemsList(
+            items.items, onDelete, items.updateTotalPrice, onUpdateQuantity),
         CupertinoTextField(
             controller: _controller,
             placeholder: 'Tambah jajanan...',
-            onSubmitted: (text) {
-              validateInput(context, _controller.text, items.add);
-              _controller.clear();
-            }),
+            onSubmitted: (text) =>
+                validateInput(context, _controller.text, onAdd)),
         CupertinoButton(
             // TODO consider whether this is optional
             child: Text('Tambah'),
-            onPressed: () {
-              validateInput(context, _controller.text, items.add);
-              _controller.clear();
-            }),
+            onPressed: () => validateInput(context, _controller.text, onAdd)),
         NavigationButtonSet('/fees', items.isPriceFilled()),
       ]);
     }));

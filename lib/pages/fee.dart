@@ -44,7 +44,7 @@ class FeeScreen extends StatelessWidget {
             }),
         Text('Harga jajanan: ${formatRupiah(items.totalPrice)}'),
         Text('Total yang dibayarkan: ${formatRupiah(totalPrice)}'),
-        NavigationButtonSet('/allocation', true)
+        NavigationButtonSet('/allocations', true)
       ]);
     }));
   }

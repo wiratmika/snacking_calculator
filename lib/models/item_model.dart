@@ -6,7 +6,12 @@ class ItemModel extends ChangeNotifier {
 
   UnmodifiableListView<Item> get items => UnmodifiableListView(_items);
 
+  String getItemName(int index) => _items[index].name;
+
   void add(String name) {
+    if (_items.contains(name)) {
+      return;
+    }
     _items.add(Item(name, 1));
     notifyListeners();
   }
