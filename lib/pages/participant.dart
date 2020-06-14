@@ -9,41 +9,35 @@ class ParticipantScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(middle: Text('Daftar Partisipan')),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Consumer<ParticipantModel>(
-              builder: (context, participants, child) {
-            return Column(children: [
-              ParticipantsList(participants.items, participants.delete),
-              CupertinoTextField(
-                  controller: _controller,
-                  placeholder: 'Tambah partisipan...',
-                  onSubmitted: (text) {
-                    validateInput(context, _controller.text, participants.add);
-                    _controller.clear();
-                  }),
-              CupertinoButton(
-                  // TODO consider whether this is optional
-                  child: Text('Tambah'),
-                  onPressed: () {
-                    validateInput(context, _controller.text, participants.add);
-                    _controller.clear();
-                  }),
-              CupertinoButton(
-                child: Text('Selanjutnya >'),
-                onPressed: participants.items.isNotEmpty
-                    ? () {
-                        Navigator.pushNamed(context, '/items');
-                      }
-                    : null,
-              ),
-            ]);
-          }),
-        ),
-      ),
+    return DefaultWrapper(
+      'Daftar Partisipan',
+      Consumer<ParticipantModel>(builder: (context, participants, child) {
+        return Column(children: [
+          ParticipantsList(participants.items, participants.delete),
+          CupertinoTextField(
+              controller: _controller,
+              placeholder: 'Tambah partisipan...',
+              onSubmitted: (text) {
+                validateInput(context, _controller.text, participants.add);
+                _controller.clear();
+              }),
+          CupertinoButton(
+              // TODO consider whether this is optional
+              child: Text('Tambah'),
+              onPressed: () {
+                validateInput(context, _controller.text, participants.add);
+                _controller.clear();
+              }),
+          CupertinoButton(
+            child: Text('Selanjutnya >'),
+            onPressed: participants.items.isNotEmpty
+                ? () {
+                    Navigator.pushNamed(context, '/items');
+                  }
+                : null,
+          ),
+        ]);
+      }),
     );
   }
 }

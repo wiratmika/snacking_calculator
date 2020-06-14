@@ -1,6 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+class DefaultWrapper extends StatelessWidget {
+  final String title;
+  final Widget child;
+
+  DefaultWrapper(this.title, this.child);
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(middle: Text(title)),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
 class DeleteButton extends StatelessWidget {
   final VoidCallback onPressed;
 

@@ -13,44 +13,39 @@ class FeeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(middle: Text('Biaya dan Diskon')),
-        child: SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Consumer2<ItemModel, FeeModel>(
-                    builder: (context, items, fees, child) {
-                  int totalPrice = items.totalPrice + fees.total;
+    return DefaultWrapper('Biaya dan Diskon',
+        Consumer2<ItemModel, FeeModel>(builder: (context, items, fees, child) {
+      int totalPrice = items.totalPrice + fees.total;
 
-                  return Column(children: [
-                    CupertinoTextField(
-                        controller: _discountController,
-                        placeholder: 'Diskon',
-                        onSubmitted: (text) {
-                          fees.discount = int.parse(_discountController.text);
-                        }),
-                    CupertinoTextField(
-                        controller: _taxController,
-                        placeholder: 'Pajak',
-                        onSubmitted: (text) {
-                          fees.tax = int.parse(_taxController.text);
-                        }),
-                    CupertinoTextField(
-                        controller: _tipController,
-                        placeholder: 'Tip',
-                        onSubmitted: (text) {
-                          fees.tip = int.parse(_tipController.text);
-                        }),
-                    CupertinoTextField(
-                        controller: _deliveryController,
-                        placeholder: 'Biaya pengantaran',
-                        onSubmitted: (text) {
-                          fees.delivery = int.parse(_deliveryController.text);
-                        }),
-                    Text('Harga jajanan: ${formatRupiah(items.totalPrice)}'),
-                    Text('Total yang dibayarkan: ${formatRupiah(totalPrice)}'),
-                    NavigationButtonSet('/allocation', true)
-                  ]);
-                }))));
+      return Column(children: [
+        CupertinoTextField(
+            controller: _discountController,
+            placeholder: 'Diskon',
+            onSubmitted: (text) {
+              fees.discount = int.parse(_discountController.text);
+            }),
+        CupertinoTextField(
+            controller: _taxController,
+            placeholder: 'Pajak',
+            onSubmitted: (text) {
+              fees.tax = int.parse(_taxController.text);
+            }),
+        CupertinoTextField(
+            controller: _tipController,
+            placeholder: 'Tip',
+            onSubmitted: (text) {
+              fees.tip = int.parse(_tipController.text);
+            }),
+        CupertinoTextField(
+            controller: _deliveryController,
+            placeholder: 'Biaya pengantaran',
+            onSubmitted: (text) {
+              fees.delivery = int.parse(_deliveryController.text);
+            }),
+        Text('Harga jajanan: ${formatRupiah(items.totalPrice)}'),
+        Text('Total yang dibayarkan: ${formatRupiah(totalPrice)}'),
+        NavigationButtonSet('/allocation', true)
+      ]);
+    }));
   }
 }

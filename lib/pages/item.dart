@@ -10,32 +10,28 @@ class ItemScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(middle: Text('Daftar Jajanan')),
-        child: SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Consumer<ItemModel>(builder: (context, items, child) {
-                  return Column(children: [
-                    ItemsList(items.items, items.delete, items.updateTotalPrice,
-                        items.updateQuantity),
-                    CupertinoTextField(
-                        controller: _controller,
-                        placeholder: 'Tambah jajanan...',
-                        onSubmitted: (text) {
-                          validateInput(context, _controller.text, items.add);
-                          _controller.clear();
-                        }),
-                    CupertinoButton(
-                        // TODO consider whether this is optional
-                        child: Text('Tambah'),
-                        onPressed: () {
-                          validateInput(context, _controller.text, items.add);
-                          _controller.clear();
-                        }),
-                    NavigationButtonSet('/fees', items.isPriceFilled()),
-                  ]);
-                }))));
+    return DefaultWrapper('Daftar Jajanan',
+        Consumer<ItemModel>(builder: (context, items, child) {
+      return Column(children: [
+        ItemsList(items.items, items.delete, items.updateTotalPrice,
+            items.updateQuantity),
+        CupertinoTextField(
+            controller: _controller,
+            placeholder: 'Tambah jajanan...',
+            onSubmitted: (text) {
+              validateInput(context, _controller.text, items.add);
+              _controller.clear();
+            }),
+        CupertinoButton(
+            // TODO consider whether this is optional
+            child: Text('Tambah'),
+            onPressed: () {
+              validateInput(context, _controller.text, items.add);
+              _controller.clear();
+            }),
+        NavigationButtonSet('/fees', items.isPriceFilled()),
+      ]);
+    }));
   }
 }
 
